@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 
 Vue.use(Auth, {
-  issuer: 'https://' + config.oktaDomain + '/oauth2/default',
+  issuer: config.oktaDomain + '/oauth2/default',
   client_id: config.clientId,
   redirect_uri: 'http://localhost:'+ config.port + 
       '/implicit/callback',

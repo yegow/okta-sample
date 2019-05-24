@@ -1,6 +1,7 @@
 <template>
   <div class="row">
-      <div class="card-panel col s4 left-align"
+    <div class="col s4">
+      <div class="card-panel left-align"
         v-for="job in jobs" :key="job.id">
         <div class="card-content blue-text">
           <span class="card-title">{{job.title}}</span>
@@ -10,6 +11,7 @@
           <a href="#">Details</a>
         </div>
       </div>
+    </div>
   </div>
 </template>
 

@@ -7,14 +7,14 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="emailInput" placeholder="Email"
-                        type="text" />
+                        type="text" v-model="email" />
                         <label for="emailInput">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="passwordInput" placeholder="Password"
-                        type="password" />
+                        type="password" v-model="password" />
                         <label for="passwordInout">Password</label>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import auth from '../util/auth'
+import auth from '@/util/auth'
 
 export default {
     name: 'login',
@@ -38,11 +38,9 @@ export default {
     },
     methods: {
         login() {
-            auth.login(this.email, this.password, loggedIn => {
-                if (!loggedIn) {
-                    this.error = 'Invalid credentials.'
-                } else {
-                    this.$router.replace(this.$route.query.redirect || '/')
+            auth.login(this.email, this.password, (err) => {
+                if (err) {
+                    this.error = err.message
                 }
             })
         }
