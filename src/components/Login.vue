@@ -41,7 +41,9 @@ export default {
             auth.login(this.email, this.password, (err) => {
                 if (err) {
                     this.error = err.message
-                }
+                    return
+                } 
+                this.$router.replace(this.$route.query.redirect || '/feed')
             })
         }
     }

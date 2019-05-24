@@ -14,17 +14,15 @@ const authClient = new OktaAuth({
 
 export default {
     login(email, pass, cb) {
-        alert(email + ': ' + pass)
         return authClient.signIn({
             username: email,
             password: pass
         }).then(res => {
+            alert(res.sessionToken)
             if (res.status === 'SUCCESS') {
+                localStorage.setItem('oktaToken', res.sessionToken)
+                cb && cb(null)
                 this.onChange(true)
-                authClient.session.setCookieAndRedirect(
-                    res.sessionToken,
-                    'http://localhost:' + config.port + '/feed'
-                )
             } // handle else
         }).fail((err) => {
             // some way to log
@@ -36,12 +34,13 @@ export default {
         return localStorage.getItem('oktaToken')
     },
     logout(cb) {
-        authClient.signOut().
-            then(() => {
-                alert('Signed out')
-                cb && cb()
-                this.onChange(false)
-            })
+        authClient.signOut().then(() => {
+            cb && cb()
+            this.onChange(false)
+        })
+
+        localStorage.removeItem('oktaToken')
+        cb && cb()
     },
     loggedIn() {
         return !!localStorage.getItem('oktaToken')
